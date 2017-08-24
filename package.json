@@ -1,0 +1,22 @@
+{
+  "name": "@articulate/ducks",
+  "version": "0.0.0",
+  "description": "Collection of redux helper functions",
+  "main": "index.js",
+  "repository": "git@github.com:articulate/ducks.git",
+  "author": "articulate",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "buble -i src -o lib",
+    "clean": "rm -rf lib",
+    "lint": "eslint src",
+    "prebuild": "yarn run clean && mkdir -p lib"
+  },
+  "dependencies": {
+    "crocks": "^0.7.0"
+  },
+  "devDependencies": {
+    "buble": "^0.15.2",
+    "eslint": "^4.5.0"
+  }
+}
