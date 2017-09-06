@@ -10,7 +10,7 @@ describe('action', () => {
     expect(action(type, payload)).to.eql({ type, payload })
   )
 
-  it('is curried to form action creators', () =>
+  it('curries to form action creators', () =>
     expect(action(type)(payload)).to.eql({ type, payload })
   )
 })
