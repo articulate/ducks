@@ -6,6 +6,13 @@
   "repository": "git@github.com:articulate/ducks.git",
   "author": "articulate",
   "license": "MIT",
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "statements": 100,
+    "functions": 100,
+    "branches": 100
+  },
   "scripts": {
     "build": "buble -i src -o lib",
     "clean": "rm -rf lib && mkdir -p lib",
@@ -24,6 +31,7 @@
     "crocks": "^0.7.0"
   },
   "devDependencies": {
+    "@articulate/spy": "^0.0.1",
     "buble": "^0.15.2",
     "chai": "^4.1.2",
     "eslint": "^4.5.0",
