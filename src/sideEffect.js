@@ -1,5 +1,5 @@
 const constant = require('crocks/combinators/constant')
-const IO       = require('crocks/crocks/IO')
+const IO       = require('crocks/IO')
 
 // sideEffect : (() -> a) -> IO Action
 const sideEffect = f =>
