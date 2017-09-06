@@ -8,15 +8,26 @@
   "license": "MIT",
   "scripts": {
     "build": "buble -i src -o lib",
-    "clean": "rm -rf lib",
-    "lint": "eslint src",
-    "prebuild": "yarn run clean && mkdir -p lib"
+    "clean": "rm -rf lib && mkdir -p lib",
+    "coverage": "nyc report --reporter=text-lcov",
+    "lint": "eslint src test",
+    "postversion": "git push --tags origin master",
+    "prebuild": "yarn run clean",
+    "pretest": "yarn run build",
+    "pretest:coverage": "yarn run build",
+    "preversion": "git checkout master && yarn run build",
+    "test": "mocha test --reporter=dot",
+    "test:ci": "yarn run lint && yarn run test:coverage",
+    "test:coverage": "nyc mocha test --reporter=dot"
   },
   "dependencies": {
     "crocks": "^0.7.0"
   },
   "devDependencies": {
     "buble": "^0.15.2",
-    "eslint": "^4.5.0"
+    "chai": "^4.1.2",
+    "eslint": "^4.5.0",
+    "mocha": "^3.5.0",
+    "nyc": "^11.2.1"
   }
 }
