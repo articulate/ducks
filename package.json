@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": "git@github.com:articulate/ducks.git",
   "author": "articulate",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "buble -i src -o lib",
     "clean": "rm -rf lib",
