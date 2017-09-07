@@ -1,5 +1,7 @@
+const curry = require('crocks/helpers/curry')
+
 // functor : Store -> Function -> Action -> a
-const functor = ({ dispatch }) => next => action => {
+const functor = ({ dispatch }, next, action) => {
   if (typeof action.map === 'function') {
     action.map(dispatch)
     return
@@ -7,4 +9,4 @@ const functor = ({ dispatch }) => next => action => {
   next(action)
 }
 
-module.exports = functor
+module.exports = curry(functor)
