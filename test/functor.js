@@ -5,9 +5,9 @@ const { action, functor } = require('..')
 
 describe('functor (redux middleware)', () => {
   const axn   = action('TYPE', null)
+  const list  = [ axn ]
   const next  = spy()
   const store = { dispatch: spy() }
-  const list  = [ axn ]
 
   afterEach(() => {
     next.reset()

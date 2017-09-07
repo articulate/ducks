@@ -9,6 +9,7 @@
 | [`handle`](#handle) | `a -> { k: (a, b, Boolean) -> a } -> (a, Action) -> a` |
 | [`logError`](#logError) | `(a, b, Boolean) -> a` |
 | [`onSuccess`](#onSuccess) | `((a, b) -> a) -> (a, b, Boolean) -> a` |
+| [`sideEffect`](#sideEffect) | `(() -> a) -> IO Action` |
 
 ### action
 
@@ -41,7 +42,7 @@ Requires the [`functor`](#functor) middleware to be registered, since it combine
 
 ```js
 const { also, sideEffect } = require('@articulate/ducks')
-const Async = require('crocks/crocks/Async')
+const Async = require('crocks/Async')
 
 const createItem = item =>
   Async((rej, res) => { /* send request to create item */ })
@@ -166,4 +167,41 @@ const putItem = (state, item) =>
 const reducer = handle({}, {
   CREATE_ITEM: onSuccess(putItem)
 })
+```
+
+### sideEffect
+
+```haskell
+sideEffect : (() -> a) -> IO Action
+```
+
+Safely wraps a side-effect in an [`IO`](https://github.com/evilsoft/crocks#crocks) that returns this [FSA-compliant](https://github.com/acdlite/flux-standard-action) action: `{ type: 'SIDE_EFFECT' }`.  Useful for things like redirecting, setting the `document.title`, or logging to the console.
+
+Requires a middleware that can handle [`IO`](https://github.com/evilsoft/crocks#crocks) actions, such as [`redux-io`](https://www.npmjs.com/package/redux-io).
+
+See also [`also`](#also), [`functor`](#functor).
+
+```js
+const { also, functor, sideEffect } = require('@articulate/ducks')
+const { applyMiddleware, combineReducers, createStore } = require('redux')
+const future = require('redux-future')
+const io     = require('redux-io')
+
+const { deleteItem } = require('../ducks/items') // Async action creator
+const reducers       = require('../ducks')
+
+const store = createStore(
+  combineReducers(reducers),
+  applyMiddleware(
+    io('run'),
+    future,
+    functor
+  )
+)
+
+const redirectHome = sideEffect(() => location.href = '/')
+
+const action = deleteItem({ id: 'abc' }).map(also(redirectHome))
+
+store.dispatch(action)  //=> deletes the item, then redirects home
 ```
