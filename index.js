@@ -1,7 +1,6 @@
 exports.action     = require('./lib/action')
 exports.also       = require('./lib/also')
 exports.error      = require('./lib/error')
-exports.functor    = require('./lib/functor')
 exports.handle     = require('./lib/handle')
 exports.logError   = require('./lib/logError')
 exports.onSuccess  = require('./lib/onSuccess')
