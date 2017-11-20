@@ -178,8 +178,9 @@ See also [`also`](#also).
 ```js
 const { also, sideEffect } = require('@articulate/ducks')
 const { applyMiddleware, combineReducers, createStore } = require('redux')
-const future = require('redux-future')
-const io     = require('redux-io')
+const functor = require('redux-functor')
+const future  = require('redux-future').default
+const io      = require('redux-io').default
 
 const { deleteItem } = require('../ducks/items') // Async action creator
 const reducers       = require('../ducks')
@@ -188,7 +189,8 @@ const store = createStore(
   combineReducers(reducers),
   applyMiddleware(
     io('run'),
-    future
+    future,
+    functor
   )
 )
 
