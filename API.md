@@ -6,9 +6,10 @@
 | [`also`](#also) | `Action -> Action -> [Action]` |
 | [`error`](#error) | `String -> a -> Action` |
 | [`handle`](#handle) | `a -> { k: (a, b, Boolean) -> a } -> (a, Action) -> a` |
-| [`logError`](#logError) | `(a, b, Boolean) -> a` |
-| [`onSuccess`](#onSuccess) | `((a, b) -> a) -> (a, b, Boolean) -> a` |
-| [`sideEffect`](#sideEffect) | `(() -> a) -> IO Action` |
+| [`logError`](#logerror) | `(a, b, Boolean) -> a` |
+| [`onError`](#onerror) | `((a, b) -> a) -> (a, b, Boolean) -> a` |
+| [`onSuccess`](#onsuccess) | `((a, b) -> a) -> (a, b, Boolean) -> a` |
+| [`sideEffect`](#sideeffect) | `(() -> a) -> IO Action` |
 
 ### action
 
@@ -134,6 +135,30 @@ const { handle, logError } = require('@articulate/ducks')
 
 const reducer = handle({}, {
   UPDATE_ITEM_DEBOUNCE: logError
+})
+```
+
+### onError
+
+`@articulate/ducks/lib/onError`
+
+```haskell
+onError :: ((a, b) -> a) -> (a, b, Boolean) -> a
+```
+
+Wraps a reducer to produce a new reducer.  If an error-action is dispatched, it executes the original reducer.  Otherwise, the current state is returned untouched.
+
+See also [`handle`](#handle).
+
+```js
+const assoc = require('crocks/helpers/assoc')
+const { handle, onError } = require('@articulate/ducks')
+
+const dealWithIt = (state, err) =>
+  assoc('errorMessage', err.message, state)
+
+const reducer = handle({}, {
+  FAILS_SOMETIMES: onError(dealWithIt)
 })
 ```
 
