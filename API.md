@@ -148,7 +148,7 @@ onError :: ((a, b) -> a) -> (a, b, Boolean) -> a
 
 Wraps a reducer to produce a new reducer.  If an error-action is dispatched, it executes the original reducer.  Otherwise, the current state is returned untouched.
 
-See also [`handle`](#handle).
+See also [`handle`](#handle), [`onSuccess`](#onsuccess).
 
 ```js
 const assoc = require('crocks/helpers/assoc')
@@ -172,7 +172,7 @@ onSuccess :: ((a, b) -> a) -> (a, b, Boolean) -> a
 
 Wraps a reducer to produce a new reducer.  If an error-action is dispatched, the current state is returned untouched.  Otherwise, it executes the original reducer.
 
-See also [`handle`](#handle).
+See also [`handle`](#handle), [`onError`](#onerror).
 
 ```js
 const assoc = require('crocks/helpers/assoc')
